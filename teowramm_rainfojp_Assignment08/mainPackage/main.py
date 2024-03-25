@@ -1,5 +1,5 @@
 # main.py
-# Name: Mikaela Milan & Joseph Rainford
+# Name: Mikaela Teowratanakul & Joseph Rainford
 # email: teowramm@mail.uc.edu & rainfojp@mail.uc.edu
 # Assignment Number: Assignment 08
 # Due Date: March 28, 2024
@@ -14,5 +14,6 @@
 from ConnectPackage.Connect import *
 
 if __name__ == "__main__":
-
-    print ("Store 2 lost", storestatusList, "loyalty customers after a fire.")
+    print("The below stores are in Ohio and their loyalty programs were affected by the fire:")
+    for store_id, num_loyalty in storestatusList:
+        print ("Store", store_id, "lost", num_loyalty, "customers in the fire")

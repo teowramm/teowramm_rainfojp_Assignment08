@@ -1,5 +1,5 @@
 # Connect.py 
-# Name: Mikaela Milan & Joseph Rainford
+# Name: Mikaela Teowratanakul & Joseph Rainford
 # email: teowramm@mail.uc.edu & rainfojp@mail.uc.edu
 # Assignment Number: Assignment 08
 # Due Date: March 28, 2024
@@ -52,14 +52,11 @@ storestatusList = list()
 
 
 for row in cursor:
-    # lots of spaces used due to exact match in SQL Server
-    if row.StoreStatus == "On Fire                                                                                             ":
-        storestatusList.append((row.NmLoyal))
+    if row.StoreStatus.strip() == "On Fire":
+        storestatusList.append((row.StoreID, row.NmLoyal))
 
-'''
-Below was used for testing
-'''
-# print(storestatusList) # number of loyalty customers that the store with storeID =2 lost when they closed due to the fire
+if __name__ == "__main__":
+    print(storestatusList) # number of loyalty customers that the store with storeID =2 lost when they closed due to the fire
 
 
 
