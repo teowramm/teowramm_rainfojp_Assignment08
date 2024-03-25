@@ -22,7 +22,27 @@ conn = pyodbc.connect('Driver={SQL Server};'
 
 cursor = conn.cursor()
 
-cursor.execute('SELECT [GroceryStoreSimulator].[dbo].[tStore].[StoreID], [GroceryStoreSimulator].[dbo].[tStoreStatus].[StoreStatus], COUNT([GroceryStoreSimulator].[dbo].[tLoyalty].[LoyaltyID]) AS NmLoyal FROM [GroceryStoreSimulator].[dbo].[tStoreHistory] INNER JOIN [GroceryStoreSimulator].[dbo].[tStore] ON [GroceryStoreSimulator].[dbo].[tStore].[StoreID] = [GroceryStoreSimulator].[dbo].[tStoreHistory].[StoreID] INNER JOIN [GroceryStoreSimulator].[dbo].[tStoreStatus] ON [GroceryStoreSimulator].[dbo].[tStoreHistory].[StoreStatusID] = [GroceryStoreSimulator].[dbo].[tStoreStatus].[StoreStatusID] INNER JOIN [GroceryStoreSimulator].[dbo].[tLoyalty] ON [GroceryStoreSimulator].[dbo].[tStoreHistory].[StoreID] = [GroceryStoreSimulator].[dbo].[tLoyalty].[StoreID] GROUP BY [GroceryStoreSimulator].[dbo].[tStore].[StoreID], [GroceryStoreSimulator].[dbo].[tStoreStatus].[StoreStatus] ORDER BY [GroceryStoreSimulator].[dbo].[tStore].[StoreID]') # edit this to put code inside parentheses (SELECT, FROM, WHERE)
+cursor.execute('''
+                SELECT 
+                    [GroceryStoreSimulator].[dbo].[tStore].[StoreID], 
+                    [GroceryStoreSimulator].[dbo].[tStoreStatus].[StoreStatus], 
+                    COUNT([GroceryStoreSimulator].[dbo].[tLoyalty].[LoyaltyID]) AS NmLoyal 
+                FROM 
+                    [GroceryStoreSimulator].[dbo].[tStoreHistory] 
+                    INNER JOIN [GroceryStoreSimulator].[dbo].[tStore] 
+                        ON [GroceryStoreSimulator].[dbo].[tStore].[StoreID] = [GroceryStoreSimulator].[dbo].[tStoreHistory].[StoreID] 
+                    INNER JOIN [GroceryStoreSimulator].[dbo].[tStoreStatus] 
+                        ON [GroceryStoreSimulator].[dbo].[tStoreHistory].[StoreStatusID] = [GroceryStoreSimulator].[dbo].[tStoreStatus].[StoreStatusID] 
+                    INNER JOIN [GroceryStoreSimulator].[dbo].[tLoyalty] 
+                        ON [GroceryStoreSimulator].[dbo].[tStoreHistory].[StoreID] = [GroceryStoreSimulator].[dbo].[tLoyalty].[StoreID] 
+                    WHERE 
+                        [GroceryStoreSimulator].[dbo].[tStoreStatus].[StoreStatus] = 'OH' 
+                    GROUP BY 
+                        [GroceryStoreSimulator].[dbo].[tStore].[StoreID],
+                        [GroceryStoreSimulator].[dbo].[tStoreStatus].[StoreStatus]
+                    ORDER BY 
+                        [GroceryStoreSimulator].[dbo].[tStore].[StoreID]
+                ''')
 
 
 
@@ -32,7 +52,8 @@ storestatusList = list()
 
 
 for row in cursor:
-    if row.StoreStatus == "On Fire                                                                                             " and row.StoreID ==2:
+    # lots of spaces used due to exact match in SQL Server
+    if row.StoreStatus == "On Fire                                                                                             " and row.State == "OH":
         storestatusList.append((row.NmLoyal))
 
 '''

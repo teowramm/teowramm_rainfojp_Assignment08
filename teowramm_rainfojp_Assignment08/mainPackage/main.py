@@ -15,4 +15,4 @@ from ConnectPackage.Connect import *
 
 if __name__ == "__main__":
 
-    print ("Store 2 lost", storestatusList[0], "loyalty customers after a fire.")
+    print ("Store 2 lost", storestatusList, "loyalty customers after a fire.")
