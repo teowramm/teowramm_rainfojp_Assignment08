@@ -36,7 +36,7 @@ cursor.execute('''
                     INNER JOIN [GroceryStoreSimulator].[dbo].[tLoyalty] 
                         ON [GroceryStoreSimulator].[dbo].[tStoreHistory].[StoreID] = [GroceryStoreSimulator].[dbo].[tLoyalty].[StoreID] 
                     WHERE 
-                        [GroceryStoreSimulator].[dbo].[tStoreStatus].[StoreStatus] = 'OH' 
+                        [GroceryStoreSimulator].[dbo].[tStore].[State] = 'OH' 
                     GROUP BY 
                         [GroceryStoreSimulator].[dbo].[tStore].[StoreID],
                         [GroceryStoreSimulator].[dbo].[tStoreStatus].[StoreStatus]
@@ -53,7 +53,7 @@ storestatusList = list()
 
 for row in cursor:
     # lots of spaces used due to exact match in SQL Server
-    if row.StoreStatus == "On Fire                                                                                             " and row.State == "OH":
+    if row.StoreStatus == "On Fire                                                                                             ":
         storestatusList.append((row.NmLoyal))
 
 '''
